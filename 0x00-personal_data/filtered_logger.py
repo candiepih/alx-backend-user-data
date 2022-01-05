@@ -8,7 +8,7 @@ import os
 import re
 from typing import List
 
-PII_FIELDS = ['email', 'phone', 'ssn', 'password', 'ip']
+PII_FIELDS = ['name', 'email', 'phone', 'ssn', 'password']
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -60,3 +60,19 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=os.environ.get('PERSONAL_DATA_DB_NAME')
     )
     return db_conn
+
+
+def main() -> None:
+    """Fetches and returns rows in users table"""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users")
+    for row in cursor:
+        logger = get_logger()
+        logger.info(row)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
