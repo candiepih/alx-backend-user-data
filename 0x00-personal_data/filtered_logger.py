@@ -68,9 +68,10 @@ def main() -> None:
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users")
     logger = get_logger()
+    fields = [field[0] for field in cursor.description]
     for row in cursor:
         str_row = "".join("{}={}; ".format(k, v)
-                          for k, v in zip(PII_FIELDS, row))
+                          for k, v in zip(fields, row))
         logger.info(str_row.strip())
     cursor.close()
     db.close()
