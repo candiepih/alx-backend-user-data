@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
+This module contains password encryption functions.
 """
-from typing import ByteString
 from bcrypt import hashpw, gensalt, checkpw
 
 
-def hash_password(password: str) -> ByteString:
+def hash_password(password: str) -> bytes:
     """
     A function that hashes a password using bcrypt.
 
