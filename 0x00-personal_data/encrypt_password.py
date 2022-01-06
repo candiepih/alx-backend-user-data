@@ -2,7 +2,7 @@
 """
 This module contains password encryption functions.
 """
-from bcrypt import hashpw, checkpw
+from bcrypt import hashpw
 import bcrypt
 
 
@@ -33,4 +33,4 @@ def is_valid(hashed_password: bytes, password: str) -> bool:
         bool: True if the password matches the hashed password,
             False otherwise.
     """
-    return checkpw(password.encode(), hashed_password)
+    return bcrypt.checkpw(password.encode(), hashed_password)
