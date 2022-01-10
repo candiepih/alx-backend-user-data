@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-""" Main 1
+""" Main 100
 """
-from api.v1.auth.auth import Auth
+import base64
+from api.v1.auth.basic_auth import BasicAuth
+from models.user import User
 
-a = Auth()
+""" Create a user test """
+user_email = "bob100@hbtn.io"
+user_clear_pwd = "H0lberton:School:98!"
 
-print(a.require_auth(None, None))
-print(a.require_auth(None, []))
-print(a.require_auth("/api/v1/status/", []))
-print(a.require_auth("/api/v1/status/", ["/api/v1/status/"]))
-print(a.require_auth("/api/v1/status", ["/api/v1/status/"]))
-print(a.require_auth("/api/v1/users", ["/api/v1/status/"]))
-print(a.require_auth("/api/v1/users", ["/api/v1/status/", "/api/v1/stats"]))
-print("\n\n")
-print(a.require_auth("/api/v1/users", ["/api/v1/stat*"]))
-print(a.require_auth("/api/v1/status", ["/api/v1/stat*"]))
-print(a.require_auth("/api/v1/stats", ["/api/v1/stat*"]))
+user = User()
+user.email = user_email
+user.password = user_clear_pwd
+print("New user: {}".format(user.id))
+user.save()
+
+basic_clear = "{}:{}".format(user_email, user_clear_pwd)
+print("Basic Base64: {}".format(base64.b64encode(basic_clear.encode('utf-8')).decode("utf-8")))
