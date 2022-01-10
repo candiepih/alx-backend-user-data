@@ -4,7 +4,6 @@ Basic Authentication
 """
 from api.v1.auth.auth import Auth
 import base64
-import binascii
 from typing import TypeVar
 from models.user import User
 
@@ -52,7 +51,7 @@ class BasicAuth(Auth):
             encode_string = base64_authorization_header.encode("utf-8")
             decoded_str = base64.b64decode(encode_string)
             return decoded_str.decode("utf-8")
-        except binascii.Error:
+        except Exception:
             return None
 
     def extract_user_credentials(self, decoded_base64_authorization_header: str) \
