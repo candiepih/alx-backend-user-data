@@ -79,7 +79,8 @@ class BasicAuth(Auth):
                 ":" not in decoded_base64_authorization_header:
             return None, None
         try:
-            username, password = decoded_base64_authorization_header.split(":", 1)
+            username, password = \
+                decoded_base64_authorization_header.split(":", 1)
             return username, password
         except ValueError:
             return None, None
