@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
+Contains Auth class which is the base class for
+all authentication methods
 """
-from flask import Blueprint, request, jsonify
 from typing import List
 from typing import TypeVar
 
