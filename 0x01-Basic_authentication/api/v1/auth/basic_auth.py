@@ -132,5 +132,3 @@ class BasicAuth(Auth):
             decoded_base64_authorization_header)
         user = self.user_object_from_credentials(user_email, user_pwd)
         return user
-
-
