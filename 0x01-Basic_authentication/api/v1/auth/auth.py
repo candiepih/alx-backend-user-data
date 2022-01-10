@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
+Contains Auth class which is the base class for
+all authentication methods
 """
-from flask import Blueprint, request, jsonify
 from typing import List
 from typing import TypeVar
 
@@ -27,8 +28,13 @@ class Auth:
             return True
         if path[-1] != '/':
             path += '/'
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('*'):
+                if path.startswith(excluded_path[:-1]):
+                    return False
         if path not in excluded_paths:
             return True
+
         return False
 
     def authorization_header(self, request=None) -> str:
