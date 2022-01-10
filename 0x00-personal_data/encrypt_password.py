@@ -2,7 +2,8 @@
 """
 This module contains password encryption functions.
 """
-from bcrypt import hashpw, gensalt, checkpw
+from bcrypt import hashpw
+import bcrypt
 
 
 def hash_password(password: str) -> bytes:
@@ -15,7 +16,7 @@ def hash_password(password: str) -> bytes:
     Returns:
         ByteString: The hashed password.
     """
-    salt = hashpw(password.encode(), gensalt())
+    salt = hashpw(password.encode(), bcrypt.gensalt())
     return salt
 
 
@@ -32,4 +33,4 @@ def is_valid(hashed_password: bytes, password: str) -> bool:
         bool: True if the password matches the hashed password,
             False otherwise.
     """
-    return checkpw(password.encode(), hashed_password)
+    return bcrypt.checkpw(password.encode(), hashed_password)

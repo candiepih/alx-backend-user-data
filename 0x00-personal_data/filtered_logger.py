@@ -8,7 +8,7 @@ import os
 import re
 from typing import List
 
-PII_FIELDS = ['name', 'email', 'phone', 'ssn', 'password']
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -21,13 +21,14 @@ def filter_datum(fields: List[str], redaction: str,
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class"""
+    """ Redacting Formatter class
+            """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: List[str]) -> None:
+    def __init__(self, fields: List[str]):
         """Initialize the formatter"""
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
@@ -47,7 +48,6 @@ def get_logger() -> logging.Logger:
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.addHandler(stream_handler)
-
     return logger
 
 
