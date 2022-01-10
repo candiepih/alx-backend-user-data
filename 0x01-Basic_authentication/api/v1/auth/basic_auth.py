@@ -43,7 +43,7 @@ class BasicAuth(Auth):
             decoded base64 encoded string
 
         Raises:
-            binascii.Error: if base64_authorization_header
+            Exception: if base64_authorization_header
             is not a valid base64 encoded string
         """
         if not base64_authorization_header or \
@@ -79,7 +79,7 @@ class BasicAuth(Auth):
                 ":" not in decoded_base64_authorization_header:
             return None, None
         try:
-            username, password = decoded_base64_authorization_header.split(":")
+            username, password = decoded_base64_authorization_header.split(":", 1)
             return username, password
         except ValueError:
             return None, None
