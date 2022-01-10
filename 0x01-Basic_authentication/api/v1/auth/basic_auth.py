@@ -9,9 +9,11 @@ from models.user import User
 
 
 class BasicAuth(Auth):
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(
+            self, authorization_header: str) -> str:
         """
-        Extracts the base64 encoded string from the authorization header
+        Extracts the base64 encoded string from the
+        authorization header
 
         Args:
             authorization_header: authorization header
@@ -29,8 +31,8 @@ class BasicAuth(Auth):
             return None
         return authorization_header.split(" ")[1]
 
-    def decode_base64_authorization_header(self, base64_authorization_header: str) \
-            -> str:
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
         """
         Decodes the base64 encoded string
 
@@ -54,13 +56,15 @@ class BasicAuth(Auth):
         except Exception:
             return None
 
-    def extract_user_credentials(self, decoded_base64_authorization_header: str) \
-            -> (str, str):
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> (str, str):
         """
-        Extracts the username and password from the decoded base64 encoded string
+        Extracts the username and password from the decoded
+        base64 encoded string
 
         Args:
-            decoded_base64_authorization_header: decoded base64 encoded string
+            decoded_base64_authorization_header: decoded
+            base64 encoded string
 
         Returns:
             user_email: user email
