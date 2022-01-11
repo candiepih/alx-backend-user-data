@@ -116,7 +116,7 @@ class BasicAuth(Auth):
                 if user.is_valid_password(user_pwd):
                     return user
             return None
-        except ValueError:
+        except Exception:
             return None
 
     def current_user(self, request=None) -> TypeVar('User'):
