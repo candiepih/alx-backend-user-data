@@ -4,14 +4,14 @@ Contains session auth paths
 """
 import os
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, request, abort
 from models.user import User
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
     """
-    Login
+    Login the user in
     """
     email = request.form.get('email')
     if not email:
@@ -32,3 +32,18 @@ def login():
     user_data = jsonify(found_user.to_json())
     user_data.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return user_data, 200
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """
+    Logout the user
+
+    Returns:
+        json: {} if successful
+    """
+    from api.v1.app import auth
+    del_session = auth.destroy_session(request)
+    if not del_session:
+        abort(404)
+    return jsonify({}), 200
