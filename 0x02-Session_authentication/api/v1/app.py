@@ -18,6 +18,9 @@ if auth_type:
     if auth_type == 'basic_auth':
         from api.v1.auth.basic_auth import BasicAuth
         auth = BasicAuth()
+    elif auth_type == 'session_auth':
+        from api.v1.auth.session_auth import SessionAuth
+        auth = SessionAuth()
     else:
         from api.v1.auth.auth import Auth
         auth = Auth()
