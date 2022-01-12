@@ -69,8 +69,8 @@ class SessionExpAuth(SessionAuth):
                 timedelta(seconds=self.session_duration) < \
                 datetime.now():
             return None
-        print(session_dictionary['created_at'])
-        print(datetime.now())
-        print(session_dictionary['created_at'] +
-              timedelta(seconds=self.session_duration))
+        print("Created at is {}".format(session_dictionary['created_at']))
+        print("Date now is {}".format(datetime.now()))
+        print("Session time to expire {}".format(session_dictionary['created_at'] +
+              timedelta(seconds=self.session_duration)))
         return session_dictionary['user_id']
