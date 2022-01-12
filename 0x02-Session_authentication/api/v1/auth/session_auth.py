@@ -57,6 +57,8 @@ class SessionAuth(Auth):
         if user_cookie is None:
             return None
         user_id = self.user_id_by_session_id.get(user_cookie)
+        if isinstance(user_id, dict):
+            user_id = user_id.get('user_id')
         return User.get(user_id)
 
     def destroy_session(self, request=None):
