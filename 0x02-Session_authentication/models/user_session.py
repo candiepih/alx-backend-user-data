@@ -2,7 +2,6 @@
 """
 User Session
 """
-
 from models.base import Base
 
 
