@@ -68,4 +68,8 @@ class SessionExpAuth(SessionAuth):
                 timedelta(seconds=self.session_duration) < \
                 datetime.now():
             return None
+        print(session_dictionary['created_at'])
+        print(datetime.now())
+        print(session_dictionary['created_at'] + \
+              timedelta(seconds=self.session_duration))
         return session_dictionary['user_id']
