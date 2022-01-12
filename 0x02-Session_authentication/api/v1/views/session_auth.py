@@ -29,6 +29,6 @@ def login():
     print(os.getenv("API_PORT"))
     from api.v1.app import auth
     session_id = auth.create_session(found_user.id)
-    user_data = jsonify(found_user.to_json()())
+    user_data = jsonify(found_user.to_json())
     user_data.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return user_data, 200
