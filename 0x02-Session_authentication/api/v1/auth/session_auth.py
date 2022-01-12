@@ -57,7 +57,7 @@ class SessionAuth(Auth):
         user_cookie = self.session_cookie(request)
         if user_cookie is None:
             return None
-        user_id = self.user_id_by_session_id.get(user_cookie)
+        user_id = self.user_id_for_session_id(user_cookie)
         if isinstance(user_id, dict):
             user_id = user_id.get('user_id')
         return User.get(user_id)
