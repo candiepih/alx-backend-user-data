@@ -13,7 +13,8 @@ class SessionExpAuth(SessionAuth):
     Implements the session expiration authentication method.
 
     Attributes:
-        session_duration (int): The duration of the session in seconds.
+        session_duration (int): The duration
+        of the session in seconds.
     """
 
     def __init__(self):
@@ -58,7 +59,8 @@ class SessionExpAuth(SessionAuth):
         """
         if not session_id:
             return None
-        session_dictionary = super().user_id_by_session_id.get(session_id)
+        session_dictionary = super()\
+            .user_id_by_session_id.get(session_id)
         if not session_dictionary:
             return None
         if self.session_duration == 0:
@@ -69,8 +71,6 @@ class SessionExpAuth(SessionAuth):
                 timedelta(seconds=self.session_duration) < \
                 datetime.now():
             return None
-        print("Created at is {}".format(session_dictionary['created_at']))
-        print("Date now is {}".format(datetime.now()))
-        print("Session time to expire {}".format(session_dictionary['created_at'] +
-              timedelta(seconds=self.session_duration)))
+        # print("Created at is {}"
+        #       .format(session_dictionary['created_at']))
         return session_dictionary['user_id']

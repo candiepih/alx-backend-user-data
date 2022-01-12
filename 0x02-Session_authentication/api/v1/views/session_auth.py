@@ -8,7 +8,8 @@ from flask import jsonify, request, abort
 from models.user import User
 
 
-@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/login',
+                 methods=['POST'], strict_slashes=False)
 def login():
     """
     Login the user in
@@ -22,11 +23,11 @@ def login():
 
     users = User.search({'email': email})
     if not users:
-        return jsonify({"error": "no user found for this email"}), 404
+        return jsonify({"error": "no user "
+                                 "found for this email"}), 404
     found_user = users[0]
     if not found_user.is_valid_password(password):
         return jsonify({"error": "wrong password"}), 401
-    print(os.getenv("API_PORT"))
     from api.v1.app import auth
     session_id = auth.create_session(found_user.id)
     user_data = jsonify(found_user.to_json())
@@ -34,7 +35,8 @@ def login():
     return user_data, 200
 
 
-@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
 def logout():
     """
     Logout the user
