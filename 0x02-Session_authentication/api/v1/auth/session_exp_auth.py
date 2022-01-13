@@ -37,7 +37,7 @@ class SessionExpAuth(SessionAuth):
         Returns:
             dict: The session.
         """
-        session_id = super().create_session(str(user_id))
+        session_id = super().create_session(user_id)
         if not session_id:
             return None
         session_dictionary = {
