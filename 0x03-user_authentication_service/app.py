@@ -2,7 +2,8 @@
 """
 Setup of a basic Flask app
 """
-from flask import Flask, jsonify, request, abort, redirect, url_for
+from flask import Flask, jsonify, request, abort,\
+    redirect, url_for, Response
 from auth import Auth
 from typing import Union
 
@@ -49,16 +50,18 @@ def login_user() -> Union[str, tuple]:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout_user() -> None:
+def logout_user() -> Response:
     """
     Logout user route
     """
     session_id = request.cookies.get('session_id')
+    if not session_id:
+        abort(403)
     user = Auth.get_user_from_session_id(session_id)
     if not user:
         abort(403)
     setattr(user, 'session_id', None)
-    redirect(url_for('home'))
+    return redirect(url_for('home'))
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
@@ -67,6 +70,8 @@ def profile() -> Union[str, tuple]:
     Profile route
     """
     session_id = request.cookies.get('session_id')
+    if not session_id:
+        abort(403)
     user = Auth.get_user_from_session_id(session_id)
     if not user:
         abort(403)

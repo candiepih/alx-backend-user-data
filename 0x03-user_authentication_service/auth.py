@@ -86,8 +86,9 @@ class Auth:
             users_found = self._db.find_user_by(email=email)
             if users_found:
                 hashed_password = users_found.hashed_password
-                return checkpw(password.encode(),
-                               hashed_password.encode('utf-8'))
+                if password:
+                    return checkpw(password.encode(),
+                                   hashed_password.encode('utf-8'))
         except NoResultFound:
             return False
         return False
