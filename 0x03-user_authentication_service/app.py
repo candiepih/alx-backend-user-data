@@ -5,7 +5,6 @@ Setup of a basic Flask app with various routes.
 from flask import Flask, jsonify, request,\
     abort, redirect, url_for, Response
 from auth import Auth
-from typing import Union
 
 app = Flask(__name__)
 Auth = Auth()
@@ -23,7 +22,7 @@ def home() -> str:
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def register_user() -> Union[str, tuple]:
+def register_user() -> tuple:
     """
     Register user route
     """
@@ -31,7 +30,7 @@ def register_user() -> Union[str, tuple]:
     password = request.form.get('password')
     try:
         Auth.register_user(email, password)
-        return jsonify({"email": email, "message": "user created"})
+        return jsonify({"email": email, "message": "user created"}), 200
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
