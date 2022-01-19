@@ -27,14 +27,13 @@ def register_user() -> Union[str, tuple]:
     password = request.form.get('password')
     try:
         Auth.register_user(email, password)
-        return jsonify({"email": "{}".format(email),
-                        "message": "user created"})
+        return jsonify({"email": email, "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login() -> str:
+def login_user() -> str:
     """
     Login user route. Creates a session_id cookie for the user
     """
@@ -43,8 +42,7 @@ def login() -> str:
     if not Auth.valid_login(email, password):
         abort(401)
     session_id = Auth.create_session(email)
-    res_data = {"email": "{}".format(email), "message": "logged in"}
-    res = jsonify(res_data)
+    res = jsonify({"email": email, "message": "logged in"})
     res.set_cookie('session_id', session_id)
     return res
 
@@ -75,7 +73,7 @@ def profile() -> Union[str, tuple]:
     user = Auth.get_user_from_session_id(session_id)
     if not user:
         abort(403)
-    return jsonify({"email": "{}".format(user.email)}), 200
+    return jsonify({"email": user.email}), 200
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
@@ -86,8 +84,8 @@ def reset_password() -> tuple:
     email = request.form.get('email')
     try:
         token = Auth.get_reset_password_token(email)
-        return jsonify({"email": "{}".format(email),
-                        "reset_token": "{}".format(token)}), 200
+        return jsonify({"email": email,
+                        "reset_token": token}), 200
     except ValueError:
         abort(403)
 
@@ -106,7 +104,7 @@ def reset_password_with_token() -> tuple:
         if user_reset_token != reset_token:
             abort(403)
         Auth.update_password(reset_token, new_password)
-        return jsonify({"email": "{}".format(email),
+        return jsonify({"email": email,
                         "message": "Password updated"}), 200
     except ValueError:
         abort(403)

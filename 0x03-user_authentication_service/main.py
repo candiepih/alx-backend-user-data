@@ -19,8 +19,7 @@ def register_user(email: str, password: str) -> None:
     r = requests.post('http://127.0.0.1:5000/users',
                       data={'email': email, 'password': password})
     if r.status_code == 200:
-        assert (r.json() == {"email": "{}".format(email),
-                             "message": "user created"})
+        assert (r.json() == {"email": email, "message": "user created"})
     else:
         assert(r.status_code == 400)
         assert (r.json() == {"message": "email already registered"})
@@ -56,8 +55,7 @@ def log_in(email: str, password: str) -> str:
     r = requests.post('http://127.0.0.1:5000/sessions',
                       data={'email': email, 'password': password})
     assert (r.status_code == 200)
-    assert(r.json() == {"email": "{}".format(email),
-                        "message": "logged in"})
+    assert(r.json() == {"email": email, "message": "logged in"})
     return r.cookies['session_id']
 
 
@@ -143,8 +141,7 @@ def update_password(email: str, reset_token: str,
     r = requests.put('http://127.0.0.1:5000/reset_password',
                      data=data)
     if r.status_code == 200:
-        assert(r.json() == {"email": "{}".format(email),
-                            "message": "Password updated"})
+        assert(r.json() == {"email": email, "message": "Password updated"})
     else:
         assert(r.status_code == 403)
 
