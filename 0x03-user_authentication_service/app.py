@@ -95,7 +95,7 @@ def reset_password() -> tuple:
 
 
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
-def update_password() -> tuple:
+def update_password():
     """
     Reset password with token route
     """
@@ -106,7 +106,7 @@ def update_password() -> tuple:
     try:
         AUTH.update_password(reset_token, new_password)
         return jsonify({"email": email, "message": "Password updated"}), 200
-    except Exception:
+    except ValueError:
         abort(403)
 
 
