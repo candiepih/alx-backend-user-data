@@ -2,8 +2,7 @@
 """
 Setup of a basic Flask app
 """
-from flask import Flask, jsonify, request, abort,\
-    redirect, url_for, Response
+from flask import Flask, jsonify, request, abort, redirect, url_for, Response
 from auth import Auth
 from typing import Union
 
@@ -35,18 +34,18 @@ def register_user() -> Union[str, tuple]:
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login_user() -> str:
+def login() -> str:
     """
-    Login user route
+    Login user route. Creates a session_id cookie for the user
     """
     email = request.form.get('email')
     password = request.form.get('password')
     if not Auth.valid_login(email, password):
         abort(401)
     session_id = Auth.create_session(email)
-    json = jsonify({"email": "{}".format(email), "message": "logged in"})
-    json.set_cookie('session_id', session_id)
-    return json
+    res = jsonify({"email": "{}".format(email), "message": "logged in"})
+    res.set_cookie('session_id', session_id)
+    return res
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
