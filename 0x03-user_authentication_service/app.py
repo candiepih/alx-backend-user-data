@@ -104,9 +104,6 @@ def reset_password_with_token() -> tuple:
     reset_token = request.form.get('reset_token')
 
     try:
-        user_reset_token = AUTH.get_reset_password_token(email)
-        if user_reset_token != reset_token:
-            abort(403)
         AUTH.update_password(reset_token, new_password)
         return jsonify({"email": email,
                         "message": "Password updated"}), 200
