@@ -5,6 +5,7 @@ all authentication methods
 """
 from typing import List
 from typing import TypeVar
+from os import getenv
 
 
 class Auth:
@@ -54,5 +55,22 @@ class Auth:
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
+        Determines if a request has a valid user.
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        Retrieves the session cookie from the request.
+
+        Args:
+            request: The request to check.
+
+        Returns:
+            The session cookie if it exists.
+            None otherwise.
+        """
+        if not request:
+            return None
+        _my_session_id = getenv('SESSION_NAME')
+        return request.cookies.get(_my_session_id, None)
