@@ -41,7 +41,8 @@ def login_user() -> str:
     """
     email = request.form.get('email')
     password = request.form.get('password')
-    if not Auth.valid_login(email, password):
+    valid_user = Auth.valid_login(email, password)
+    if not valid_user:
         abort(401)
     session_id = Auth.create_session(email)
     json = jsonify({"email": "{}".format(email), "message": "logged in"})
