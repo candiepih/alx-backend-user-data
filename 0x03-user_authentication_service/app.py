@@ -35,8 +35,11 @@ def register_user() -> Union[str, tuple]:
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login() -> str:
-    """
-    Login user route. Creates a session_id cookie for the user
+    """ POST /sessions
+    Creates new session for user, stores as cookie
+    Email and pswd fields in x-www-form-urlencoded request
+    Return:
+      - JSON payload
     """
     email = request.form.get('email')
     password = request.form.get('password')
