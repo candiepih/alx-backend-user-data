@@ -62,7 +62,7 @@ class DB:
             raise NoResultFound("No user found")
         return user
 
-    def update_user(self, user_id: int, **kwargs: dict) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
         Update the given user
 
@@ -78,5 +78,5 @@ class DB:
             for key, value in kwargs.items():
                 setattr(user, key, value)
             self._session.commit()
-        except (NoResultFound, InvalidRequestError):
+        except (NoResultFound, InvalidRequestError, ValueError):
             raise ValueError
