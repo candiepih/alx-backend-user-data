@@ -103,12 +103,10 @@ def update_password() -> tuple:
     reset_token = request.form.get('reset_token')
     new_password = request.form.get('new_password')
 
-    if not email or not reset_token or not new_password:
-        abort(403)
-
     try:
         AUTH.update_password(reset_token, new_password)
-        res = {"email": email, "message": "Password updated"}
+        res = {"email": "{}".format(email),
+               "message": "Password updated"}
         return jsonify(res), 200
     except ValueError:
         abort(403)
