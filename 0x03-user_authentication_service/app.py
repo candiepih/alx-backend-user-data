@@ -35,14 +35,13 @@ def register_user() -> Union[str, tuple]:
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login_user() -> str:
+def login() -> str:
     """
     Login user route
     """
     email = request.form.get('email')
     password = request.form.get('password')
-    valid_user = Auth.valid_login(email, password)
-    if not valid_user:
+    if not Auth.valid_login(email, password):
         abort(401)
     session_id = Auth.create_session(email)
     json = jsonify({"email": "{}".format(email), "message": "logged in"})
