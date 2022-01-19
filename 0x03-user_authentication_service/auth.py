@@ -129,6 +129,18 @@ class Auth:
         except NoResultFound:
             return None
 
+    def destroy_session(self, user_id: int) -> None:
+        """
+        Method that destroys a session for a user.
+
+        Args:
+            user_id: The user id.
+        """
+        try:
+            self._db.update_user(user_id, session_id=None)
+        except ValueError:
+            pass
+
     def get_reset_password_token(self, email: str) -> str:
         """
         Method that gets a reset password token.
