@@ -2,7 +2,7 @@
 """
 Setup of a basic Flask app
 """
-from flask import Flask, jsonify, request, abort, redirect, url_for, Response
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 from typing import Union
 
@@ -48,7 +48,7 @@ def login_user() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout_user() -> Response:
+def logout_user():
     """
     Logout user route
     """
