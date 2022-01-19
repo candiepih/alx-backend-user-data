@@ -54,7 +54,7 @@ def login() -> str:
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> Response:
     """
-    Logout user route
+    Logout user route to delete the session_id cookie
     """
     session_id = request.cookies.get('session_id')
     if not session_id:
@@ -69,7 +69,7 @@ def logout() -> Response:
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> tuple:
     """
-    Profile route
+    Profile route to get user profile
     """
     session_id = request.cookies.get('session_id')
     if not session_id:
@@ -83,7 +83,7 @@ def profile() -> tuple:
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
 def reset_password() -> tuple:
     """
-    Reset password route
+    Reset password route to send a reset token to the user
     """
     email = request.form.get('email')
     try:
@@ -97,7 +97,7 @@ def reset_password() -> tuple:
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
 def update_password() -> tuple:
     """
-    Reset password with token route
+    Update password route with reset token available in the request
     """
     email = request.form.get('email')
     reset_token = request.form.get('reset_token')
@@ -105,9 +105,9 @@ def update_password() -> tuple:
 
     try:
         AUTH.update_password(reset_token, new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
     except ValueError:
         abort(403)
-    return jsonify({"email": email, "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
