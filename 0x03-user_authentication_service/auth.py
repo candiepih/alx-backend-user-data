@@ -85,14 +85,12 @@ class Auth:
         """
         try:
             users_found = self._db.find_user_by(email=email)
-            if users_found:
-                hashed_password = users_found.hashed_password
-                if password:
-                    return checkpw(password.encode(),
-                                   hashed_password.encode('utf-8'))
+            hashed_password = users_found.hashed_password
+            if password:
+                return checkpw(password.encode(),
+                               hashed_password.encode('utf-8'))
         except (NoResultFound, InvalidRequestError):
             return False
-        return False
 
     def create_session(self, email: str) -> Union[str, None]:
         """
