@@ -22,7 +22,7 @@ def _hash_password(password: str) -> bytes:
     Returns:
         bytes: The encrypted password.
     """
-    return hashpw(password.encode(), gensalt())
+    return hashpw(password.encode('utf-8'), gensalt())
 
 
 def _generate_uuid() -> str:
@@ -83,12 +83,13 @@ class Auth:
         Returns:
             bool: True if the login is valid, False otherwise.
         """
+        if not email or not password:
+            return False
         try:
             users_found = self._db.find_user_by(email=email)
             hashed_password = users_found.hashed_password
-            if password:
-                return checkpw(password.encode(),
-                               hashed_password.encode('utf-8'))
+            return checkpw(password.encode('utf-8'),
+                           hashed_password)
         except (NoResultFound, InvalidRequestError):
             return False
 
