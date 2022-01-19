@@ -5,7 +5,7 @@ Setup of a basic Flask app with various routes.
 from flask import Flask, jsonify, request,\
     abort, redirect, url_for, Response
 from auth import Auth
-from typing import Union, Any
+from typing import Union
 
 app = Flask(__name__)
 AUTH = Auth()
@@ -95,7 +95,7 @@ def reset_password() -> tuple:
 
 
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
-def update_password() -> tuple[Any, int]:
+def update_password() -> tuple:
     """
     Reset password with token route
     """
@@ -105,9 +105,9 @@ def update_password() -> tuple[Any, int]:
 
     try:
         AUTH.update_password(reset_token, new_password)
-        return jsonify({"email": email, "message": "Password updated"}), 200
     except ValueError:
         abort(403)
+    return jsonify({"email": email, "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
