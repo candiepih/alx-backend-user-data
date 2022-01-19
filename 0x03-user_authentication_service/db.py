@@ -72,7 +72,7 @@ class DB:
         Returns:
             None
         """
-        user: User = self.find_user_by(id=user_id)
+        user = self.find_user_by(id=user_id)
         if not user:
             raise NoResultFound("No user found")
         try:
