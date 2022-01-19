@@ -35,7 +35,7 @@ def register_user() -> Union[str, tuple]:
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login_user() -> Union[str, tuple]:
+def login_user() -> str:
     """
     Login user route
     """
