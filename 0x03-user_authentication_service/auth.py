@@ -3,7 +3,8 @@
 This module contains the methods and attributes needed
 for the authentication
 """
-from bcrypt import hashpw, gensalt, checkpw
+from bcrypt import gensalt
+import bcrypt
 from db import DB
 import uuid
 from user import User
@@ -21,7 +22,7 @@ def _hash_password(password: str) -> bytes:
     Returns:
         bytes: The encrypted password.
     """
-    return hashpw(password.encode(), gensalt())
+    return bcrypt.hashpw(password.encode(), gensalt())
 
 
 def _generate_uuid() -> str:
@@ -87,8 +88,8 @@ class Auth:
             if users_found:
                 hashed_password = users_found.hashed_password
                 if password:
-                    return checkpw(password.encode(),
-                                   hashed_password.encode('utf-8'))
+                    return bcrypt.checkpw(password.encode(),
+                                          hashed_password.encode('utf-8'))
         except NoResultFound:
             return False
         return False
