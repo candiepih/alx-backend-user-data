@@ -2,6 +2,7 @@
 """
 Setup of a basic Flask app
 """
+import flask
 from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 from typing import Union
@@ -33,7 +34,7 @@ def register_user() -> Union[str, tuple]:
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login_user() -> str:
+def login() -> str:
     """
     Login user route. Creates a session_id cookie for the user
     """
@@ -48,7 +49,7 @@ def login_user() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout_user():
+def logout() -> flask.Response:
     """
     Logout user route
     """
@@ -63,7 +64,7 @@ def logout_user():
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
-def profile() -> Union[str, tuple]:
+def profile() -> tuple:
     """
     Profile route
     """
