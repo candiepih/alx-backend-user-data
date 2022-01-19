@@ -75,10 +75,10 @@ class DB:
         """
         user = self.find_user_by(id=user_id)
         if not user:
-            raise NoResultFound("No user found")
+            raise ValueError
         try:
             for key, value in kwargs.items():
                 setattr(user, key, value)
             self._session.commit()
-        except (InvalidRequestError, ValueError):
-            raise ValueError("Invalid update")
+        except InvalidRequestError:
+            raise ValueError
