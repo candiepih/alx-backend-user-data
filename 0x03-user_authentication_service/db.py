@@ -73,12 +73,10 @@ class DB:
         Returns:
             None
         """
-        user = self.find_user_by(id=user_id)
-        if not user:
-            raise ValueError
         try:
+            user = self.find_user_by(id=user_id)
             for key, value in kwargs.items():
                 setattr(user, key, value)
             self._session.commit()
-        except InvalidRequestError:
+        except (NoResultFound, InvalidRequestError):
             raise ValueError
