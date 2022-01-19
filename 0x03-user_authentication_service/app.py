@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Setup of a basic Flask app
+Setup of a basic Flask app with various routes.
 """
-import flask
-from flask import Flask, jsonify, request, abort, redirect, url_for
+from flask import Flask, jsonify, request,\
+    abort, redirect, url_for, Response
 from auth import Auth
 from typing import Union
 
@@ -15,6 +15,9 @@ Auth = Auth()
 def home() -> str:
     """
     Home route
+
+    Returns:
+        str: Home page payload
     """
     return jsonify({"message": "Bienvenue"})
 
@@ -35,11 +38,8 @@ def register_user() -> Union[str, tuple]:
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login() -> str:
-    """ POST /sessions
-    Creates new session for user, stores as cookie
-    Email and pswd fields in x-www-form-urlencoded request
-    Return:
-      - JSON payload
+    """
+    Login user route. Creates a session_id cookie for the user
     """
     email = request.form.get('email')
     password = request.form.get('password')
@@ -52,7 +52,7 @@ def login() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout() -> flask.Response:
+def logout() -> Response:
     """
     Logout user route
     """
