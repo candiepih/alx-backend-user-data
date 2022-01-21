@@ -2,8 +2,7 @@
 """
 Setup of a basic Flask app with various routes.
 """
-from flask import Flask, jsonify, request,\
-    abort, redirect, url_for, Response
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 from typing import Union
 
@@ -52,7 +51,7 @@ def login() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout() -> Response:
+def logout():
     """
     Logout user route to delete the session_id cookie
     """
